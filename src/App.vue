@@ -75,15 +75,22 @@
     },
     
     mounted() {
-      Product.list().then(res => {
-        this.products = res.data;
-      })
+      this.list()
     },
 
     methods: {
+
+      list() {
+        Product.list().then(res => {
+          this.products = res.data;
+        })
+      },
+
       save() {
         Product.save(this.product).then(res => {
-        alert("Save Sucessfull!")
+          this.product = {}
+          alert("Save Sucessfull!")
+          this.list()
         })
       }
     }

@@ -8,14 +8,14 @@
     </nav>
 
     <div class="container">
-      <form>
+      <form @submit.prevent="save">
 
           <label>Nome</label>
-          <input type="text" placeholder="Nome">
+          <input type="text" placeholder="Nome" v-model="product.name">
           <label>Quantidade</label>
-          <input type="number" placeholder="QTD">
+          <input type="number" placeholder="QTD" v-model="product.quantity">
           <label>Valor</label>
-          <input type="text" placeholder="Valor">
+          <input type="text" placeholder="Valor" v-model="product.price">
 
           <button class="waves-effect waves-light btn-small">Salvar<i class="material-icons left">save</i></button>
 
@@ -65,6 +65,11 @@
 
     data() {
       return {
+        product: {
+          name: '',
+          quantity: '',
+          price: ''
+        }, 
         products: []
       }
     },
@@ -73,7 +78,16 @@
       Product.list().then(res => {
         this.products = res.data;
       })
+    },
+
+    methods: {
+      save() {
+        Product.save(this.product).then(res => {
+        alert("Save Sucessfull!")
+        })
+      }
     }
+
   }
 
 </script>

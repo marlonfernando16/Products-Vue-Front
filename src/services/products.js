@@ -7,5 +7,9 @@ export default {
     
     save:(product) => {
         return http.post('product', product)
+    },
+
+    update:(product) => {
+        return http.put('product', product)
     }
 }

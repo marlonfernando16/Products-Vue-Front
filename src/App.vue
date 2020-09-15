@@ -8,6 +8,11 @@
     </nav>
 
     <div class="container">
+      
+      <ul>
+        <li> {{ errors }} </li>
+      </ul>
+      
       <form @submit.prevent="save">
 
           <label>Nome</label>
@@ -42,7 +47,7 @@
             <td>{{ product.quantity }}</td>
             <td>{{ product.price }}</td>
             <td>
-              <button class="waves-effect btn-small blue darken-1"><i class="material-icons">create</i></button>
+              <button @click="update(product)" class="waves-effect btn-small blue darken-1"><i class="material-icons">create</i></button>
               <button class="waves-effect btn-small red darken-1"><i class="material-icons">delete_sweep</i></button>
             </td>
 
@@ -58,6 +63,7 @@
 </template>
 
 <script>
+import products from './services/products'
 
   import Product from './services/products'
   
@@ -66,11 +72,13 @@
     data() {
       return {
         product: {
+          id: '',
           name: '',
           quantity: '',
           price: ''
         }, 
-        products: []
+        products: [],
+        errors: ''
       }
     },
     
@@ -87,11 +95,30 @@
       },
 
       save() {
-        Product.save(this.product).then(res => {
+        if(!this.product.id) {
+          Product.save(this.product).then(res => {
           this.product = {}
           alert("Save Sucessfull!")
           this.list()
+          this.errors = ''
+        }).catch(e => {
+          this.errors = e.response.data.fieldMessage
         })
+      } else {
+          Product.update(this.product).then(res => {
+          this.product = {}
+          alert("Updated Sucessfull!")
+          this.list()
+          this.errors = ''
+        }).catch(e => {
+          this.errors = e.response.data.fieldMessage
+        })
+      }
+      
+      },
+
+      update(product) {
+        this.product = product
       }
     }
 

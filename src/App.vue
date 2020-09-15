@@ -103,6 +103,7 @@ import products from './services/products'
           this.errors = ''
         }).catch(e => {
           this.errors = e.response.data.fieldMessage
+<<<<<<< HEAD
         })
       } else {
           Product.update(this.product).then(res => {
@@ -112,6 +113,8 @@ import products from './services/products'
           this.errors = ''
         }).catch(e => {
           this.errors = e.response.data.fieldMessage
+=======
+>>>>>>> a493628b47a4979ac87a1912f1b6ef3a755925ff
         })
       }
       

@@ -8,6 +8,11 @@
     </nav>
 
     <div class="container">
+      
+      <ul>
+        <li> {{ errors }} </li>
+      </ul>
+      
       <form @submit.prevent="save">
 
           <label>Nome</label>
@@ -70,7 +75,8 @@
           quantity: '',
           price: ''
         }, 
-        products: []
+        products: [],
+        errors: ''
       }
     },
     
@@ -91,6 +97,9 @@
           this.product = {}
           alert("Save Sucessfull!")
           this.list()
+          this.errors = ''
+        }).catch(e => {
+          this.errors = e.response.data.fieldMessage
         })
       }
     }

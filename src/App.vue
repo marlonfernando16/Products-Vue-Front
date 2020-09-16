@@ -48,7 +48,7 @@
             <td>{{ product.price }}</td>
             <td>
               <button @click="update(product)" class="waves-effect btn-small blue darken-1"><i class="material-icons">create</i></button>
-              <button class="waves-effect btn-small red darken-1"><i class="material-icons">delete_sweep</i></button>
+              <button @click="remove(product.id)" class="waves-effect btn-small red darken-1"><i class="material-icons">delete_sweep</i></button>
             </td>
 
           </tr>
@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import products from './services/products'
 
   import Product from './services/products'
   
@@ -103,7 +102,6 @@ import products from './services/products'
           this.errors = ''
         }).catch(e => {
           this.errors = e.response.data.fieldMessage
-<<<<<<< HEAD
         })
       } else {
           Product.update(this.product).then(res => {
@@ -113,8 +111,6 @@ import products from './services/products'
           this.errors = ''
         }).catch(e => {
           this.errors = e.response.data.fieldMessage
-=======
->>>>>>> a493628b47a4979ac87a1912f1b6ef3a755925ff
         })
       }
       
@@ -122,7 +118,18 @@ import products from './services/products'
 
       update(product) {
         this.product = product
-      }
+      },
+
+      remove(id) {
+        if(confirm('Would you like to remove the product?')) {
+          Product.delete(id).then(res => {
+          this.list() 
+          this.errors = ''  
+          }).catch(e => {
+          this.errors = e.response.data.fieldMessage
+          })
+        }  
+      } 
     }
 
   }

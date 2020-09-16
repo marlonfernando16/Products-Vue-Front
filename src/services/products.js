@@ -11,5 +11,9 @@ export default {
 
     update:(product) => {
         return http.put('product', product)
+    },
+
+    delete:(id) => {
+        return http.delete(`product/${id}`)
     }
 }
